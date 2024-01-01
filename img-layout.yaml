@@ -1,5 +1,5 @@
-train: /home/sy/img_layout/images/train  # 训练集
-val: /home/sy/img_layout/images/val  # 验证集
+train: D:\\Code\\DATAS\\CDLA_DATASET\\train  # 训练集
+val: D:\\Code\\DATAS\\CDLA_DATASET\\val  # 验证集
 test:                # 验证集
 
 nc: 10  # 数据集类别数量
