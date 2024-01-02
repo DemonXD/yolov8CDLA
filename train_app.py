@@ -1,7 +1,14 @@
-import sys
 import os
+import sys
+import torch
 sys.path.insert(0, os.path.dirname(os.getcwd()))
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+if sys.platform in ["windows", "Linux"]:
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+    device = torch.device("0")
+    config_file = "dataset-win.yaml"
+elif sys.platform == "darwin":
+    device = torch.device("mps")
+    config_file = "dataset-mac.yaml"
 
 from ultralytics import YOLO
 
@@ -13,7 +20,8 @@ def train_model():
     print('model load completed。。。')
 
     # 使用模型
-    model.train(data="img-layout.yaml", epochs=300 , lr0=0.0001)  # 训练模型
+
+    model.train(data=config_file, epochs=300 , lr0=0.0001, device=device)  # 训练模型
     #
     metrics = model.val()  # 在验证集上评估模型性能
     #

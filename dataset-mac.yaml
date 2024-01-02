@@ -1,0 +1,7 @@
+train: /Users/milesxu/Projects/Money/CDLA_DATASET/train  # 训练集
+val: /Users/milesxu/Projects/Money/CDLA_DATASET/val  # 验证集
+test:                # 验证集
+
+nc: 10  # 数据集类别数量
+names: ['Header', 'Text', 'Reference', 'Figure caption', 'Figure', 'Table caption', 'Table', 'Title', 'Footer', 'Equation']
+
