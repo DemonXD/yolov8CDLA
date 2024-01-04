@@ -2,9 +2,11 @@ import os
 import sys
 import torch
 sys.path.insert(0, os.path.dirname(os.getcwd()))
-if sys.platform in ["windows", "Linux"]:
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+
+if sys.platform in ["win32", "Linux"]:
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-    device = torch.device("0")
+    device = torch.device(0)
     config_file = "dataset-win.yaml"
 elif sys.platform == "darwin":
     device = torch.device("mps")
@@ -14,14 +16,20 @@ from ultralytics import YOLO
 
 def train_model():
     # 加载模型
-    # model = YOLO("yolov8n.yaml")  # 从头开始构建新模型
-    print('model load。。。')
-    model = YOLO("./8npt/best.pt")  # 加载模型
-    print('model load completed。。。')
+    model = YOLO("yolov8n.pt")  # 使用预训练模型
+    # print('model load。。。')
+    # model = YOLO("./8npt/best.pt")  # 加载模型
+    # print('model load completed。。。')
 
     # 使用模型
-
-    model.train(data=config_file, epochs=300 , lr0=0.0001, device=device)  # 训练模型
+    model.train(
+        data=config_file,
+        epochs=50,
+        batch=64,
+        lr0=0.001,
+        imgsz=640,
+        device=device
+        )  # 训练模型
     #
     metrics = model.val()  # 在验证集上评估模型性能
     #
