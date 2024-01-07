@@ -16,7 +16,7 @@ from ultralytics import YOLO
 
 def train_model():
     # 加载模型
-    model = YOLO("yolov8n.pt")  # 使用预训练模型
+    model = YOLO("yolov8n.yaml").load("yolov8n.pt")  # 使用预训练模型
     # print('model load。。。')
     # model = YOLO("./8npt/best.pt")  # 加载模型
     # print('model load completed。。。')
@@ -24,9 +24,7 @@ def train_model():
     # 使用模型
     model.train(
         data=config_file,
-        epochs=50,
-        batch=64,
-        lr0=0.001,
+        epochs=100,
         imgsz=640,
         device=device
         )  # 训练模型
