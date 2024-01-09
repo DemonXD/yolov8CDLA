@@ -16,11 +16,12 @@ from ultralytics import YOLO
 
 def train_model():
     # 加载模型
-    model = YOLO("yolov8n.yaml").load("yolov8n.pt")  # 使用预训练模型
+    model = YOLO("yolov8n.yaml").load("./8npt/best.pt")  # 使用预训练模型
     # print('model load。。。')
     # model = YOLO("./8npt/best.pt")  # 加载模型
     # print('model load completed。。。')
 
+    print(" DEVICE: ", device)
     # 使用模型
     model.train(
         data=config_file,

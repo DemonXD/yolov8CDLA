@@ -1,23 +1,16 @@
-from pycocotools.coco import COCO
-import numpy as np
 import tqdm
-import argparse
+import click
+import numpy as np
+from pathlib import Path
+from pycocotools.coco import COCO
 
 
-def arg_parser():
-    parser = argparse.ArgumentParser('code by rbj')
-    parser.add_argument('--annotation_path', type=str,
-                        default='D:\\Code\\DATAS\\CDLA_DATASET\\val_p\\annotations.json')
-    #生成的txt文件保存的目录
-    parser.add_argument('--save_base_path', type=str, default='D:\\Code\\DATAS\\CDLA_DATASET\\val_y\\')
-    args = parser.parse_args(args=[])
-    #原网页中是args = parser.parse_args()会报错，改成这个以后解决了
-    return args
-
-if __name__ == '__main__':
-    args = arg_parser()
-    annotation_path = args.annotation_path
-    save_base_path = args.save_base_path
+@click.command
+@click.option("--annotation-path", type=click.types.STRING, help="coco annotation file path")
+@click.option("--output-dir", type=click.types.STRING, help="output dir for yolo label files")
+def convert(annotation_path: str, output_dir: str):
+    annotation_path = annotation_path
+    save_base_path = output_dir
 
     data_source = COCO(annotation_file=annotation_path)
     catIds = data_source.getCatIds()
@@ -38,8 +31,11 @@ if __name__ == '__main__':
         height = img_info['height']
         width = img_info['width']
 
-        save_path = save_base_path + file_name + '.txt'
-        with open(save_path, mode='w') as fp:
+        save_path = Path(save_base_path) / (file_name + '.txt')
+        if not Path(save_path).parent.exists():
+            Path(save_path).parent.mkdir(parents=True)
+
+        with open(str(save_path), mode='w') as fp:
             annotation_id = data_source.getAnnIds(img_id)
             boxes = np.zeros((0, 5))
             if len(annotation_id) == 0:
@@ -64,3 +60,7 @@ if __name__ == '__main__':
                 lines += '\n'
             fp.writelines(lines)
     print('finish')
+
+
+if __name__ == "__main__":
+    convert()
