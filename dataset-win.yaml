@@ -4,14 +4,16 @@ val: val/  # 验证集
 test:                # 验证集
 
 nc: 10  # 数据集类别数量
-names: 
-  0: "Text"
-  1: "Title"
-  2: "Figure"
-  3: "Figure caption"
-  4: "Table"
-  5: "Table caption"
-  6: "Header"
-  7: "Footer"
-  8: "Reference"
-  9: "Equation"
+names: ["Text", "Title", "Figure", "Figure caption", "Table", "Table caption", "Header", "Footer", "Reference", "Equation"]
+
+# names: 
+#   0: "Text"
+#   1: "Title"
+#   2: "Figure"
+#   3: "Figure caption"
+#   4: "Table"
+#   5: "Table caption"
+#   6: "Header"
+#   7: "Footer"
+#   8: "Reference"
+#   9: "Equation"
