@@ -26,7 +26,9 @@ def train_model():
     model.train(
         data=config_file,
         epochs=100,
-        imgsz=640,
+        batch=8,
+        imgsz=1248,
+        lr0=0.01,
         device=device
         )  # 训练模型
     #
